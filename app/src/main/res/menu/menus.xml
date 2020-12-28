@@ -8,6 +8,16 @@
         app:showAsAction="always"
         app:actionViewClass="android.widget.SearchView"/>
 
+    <item android:id="@+id/refresh"
+        android:icon="@drawable/ic_baseline_refresh_24"
+        app:showAsAction="always"
+        android:title="Reload Page"/>
+
+    <item android:id="@+id/home"
+        android:icon="@drawable/ic_baseline_home_24"
+        app:showAsAction="always"
+        android:title="Home Page"/>
+
     <item android:id="@+id/addNote"
         android:icon="@drawable/ic_baseline_note_add_24"
         app:showAsAction="always"
