@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class home extends AppCompatActivity {
 
         recyclerView= findViewById(R.id.recyclerView);
         no_record_ImageView= findViewById(R.id.imageView);
-
+        
         //Setting up layoutmanager for recyclerview
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -56,7 +57,7 @@ public class home extends AppCompatActivity {
         }
 
         //Setting up adapter
-        MyAdapter myAdapter=new MyAdapter(dataholders,getApplicationContext());
+        myAdapter=new MyAdapter(dataholders,getApplicationContext());
         recyclerView.setAdapter(myAdapter);
 
         if (myAdapter.getItemCount() == 0)
@@ -77,36 +78,63 @@ public class home extends AppCompatActivity {
         MenuInflater menuInflater= getMenuInflater();
         menuInflater.inflate(R.menu.menus,menu);
         menu.findItem(R.id.home).setVisible(false);
-        return super.onCreateOptionsMenu(menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
-    {
-        switch (item.getItemId())
+        MenuItem searchs, refresh, addnote, about;
+
+        searchs= menu.findItem(R.id.search);
+        refresh= menu.findItem(R.id.refresh);
+        addnote= menu.findItem(R.id.addNote);
+        about= menu.findItem(R.id.about);
+        
+        SearchView searchView= (SearchView)searchs.getActionView(); //This will create a textbox when search option is clicked
+        //This part of code will perform action when something is typed in the search bar
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
         {
-            case R.id.search:
+            @Override
+            public boolean onQueryTextSubmit(String query)
+            {
+                return false;
+            }
 
-                break;
+            @Override
+            public boolean onQueryTextChange(String newText)
+            {
+                myAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
-            case R.id.refresh:
+        refresh.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
                 finish();
                 startActivity(getIntent());
-                break;
+                return false;
+            }
+        });
 
-            case R.id.addNote:
-                startActivity(new Intent(getApplicationContext(),addNotes.class));
-                finish();
-                break;
-            case R.id.about:
-                AlertDialog.Builder builder=new AlertDialog.Builder(this); //Pass any view to continue
-                builder.setIcon(R.drawable.ic_baseline_info_24);
-                builder.setTitle("About");
-                builder.setMessage("'Notes' is an Android Application that enables the user to save notes in device.\nDeveloper: Abhijit Dasgupta");
-                builder.setNegativeButton("Ok", null);
-                builder.show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
+        addnote.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                 startActivity(new Intent(getApplicationContext(),addNotes.class));
+                 finish();
+                 return false;
+            }
+        });
+
+        about.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                 AlertDialog.Builder builder=new AlertDialog.Builder(getApplicationContext()); //Pass any view to continue
+                 builder.setIcon(R.drawable.ic_baseline_info_24);
+                 builder.setTitle("About");
+                 builder.setMessage("'Notes' is an Android Application that enables the user to save notes in device.\nDeveloper: Abhijit Dasgupta");
+                 builder.setNegativeButton("Ok", null);
+                 builder.show();
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 }
