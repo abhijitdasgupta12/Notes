@@ -72,16 +72,19 @@ public class SQLite_DB_Manager extends SQLiteOpenHelper
         return c_obj;
     }
 
-    //Updating record into a specific row
-    public String updateSpecificRow(int column_index, String title, String desc)
+    //Updating record into a specific row ****ERROR HAPPENING FOR SOME REASON! DATA IS NOT GETTING INSERTED IN THE DB BUT RESULT SHOWS DATA INSERTED****
+    public int updateSpecificRow(String col_id, String title, String desc)
     {
         SQLiteDatabase db= this.getWritableDatabase();
 
-        String qry="UPDATE tbl_notes SET title="+title+", description="+desc+" where id="+column_index;
+        ContentValues contentValues= new ContentValues();
 
-        db.execSQL(qry);
+        contentValues.put("id", col_id);
+        contentValues.put("title",title);
+        contentValues.put("description",desc);
 
-        return "Updated";
+        return db.update("tbl_notes", contentValues, "id=?", new String[]{col_id});
+
     }
 
     public Cursor fetchRecordsFromSelectedRow(int column_index)
@@ -101,6 +104,6 @@ public class SQLite_DB_Manager extends SQLiteOpenHelper
 
         db.delete("tbl_notes","id="+column_index, null);
 
-        return "Deleted";
+        return "Record Deleted. Refresh this page to make the changes to take place.";
     }
 }
