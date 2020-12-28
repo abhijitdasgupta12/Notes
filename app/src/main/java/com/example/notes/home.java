@@ -76,6 +76,7 @@ public class home extends AppCompatActivity {
     {
         MenuInflater menuInflater= getMenuInflater();
         menuInflater.inflate(R.menu.menus,menu);
+        menu.findItem(R.id.home).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -87,8 +88,15 @@ public class home extends AppCompatActivity {
             case R.id.search:
 
                 break;
+
+            case R.id.refresh:
+                finish();
+                startActivity(getIntent());
+                break;
+
             case R.id.addNote:
                 startActivity(new Intent(getApplicationContext(),addNotes.class));
+                finish();
                 break;
             case R.id.about:
                 AlertDialog.Builder builder=new AlertDialog.Builder(this); //Pass any view to continue
