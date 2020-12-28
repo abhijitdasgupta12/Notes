@@ -58,34 +58,6 @@ public class addNotes extends AppCompatActivity
 
     }
 
-//    if (new Intent().getIntExtra("index",1) > 0)
-//    {
-//        col_id= intent.getIntExtra("index",0);
-//
-//        final Cursor cursors= new SQLite_DB_Manager(this).fetchRecordsFromSelectedRow(col_id);
-//
-//        while (cursors.moveToNext())
-//        {
-//            titleEditText.setText(cursors.getString(1));
-//            descEditText.setText(cursors.getString(2));
-//        }
-//
-//        addButton.setEnabled(false);
-//        updateButton.setEnabled(true);
-//
-//        updateButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                new SQLite_DB_Manager(getApplicationContext()).updateSpecificRow(col_id, cursors.getString(1), cursors.getString(2));
-//                Toast.makeText(addNotes.this, "", Toast.LENGTH_SHORT).show();
-//                updateButton.setEnabled(false);
-//                startActivity(new Intent(getApplicationContext(), home.class));
-//                finish();
-//            }
-//        });
-//
-//    }
-
     private void addRecord(String title, String desc)
     {
         String result= new SQLite_DB_Manager(this).addRecord(title,desc);
@@ -103,6 +75,8 @@ public class addNotes extends AppCompatActivity
         MenuInflater menuInflater= getMenuInflater();
         menuInflater.inflate(R.menu.menus,menu);
         menu.findItem(R.id.search).setVisible(false);
+        menu.findItem(R.id.refresh).setVisible(false);
+        menu.findItem(R.id.addNote).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -111,8 +85,8 @@ public class addNotes extends AppCompatActivity
     {
         switch (item.getItemId())
         {
-            case R.id.addNote:
-                startActivity(new Intent(getApplicationContext(),addNotes.class));
+            case R.id.home:
+                startActivity(new Intent(getApplicationContext(), home.class));
                 finish();
                 break;
             case R.id.about:
