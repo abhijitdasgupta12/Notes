@@ -1,6 +1,8 @@
 package com.example.notes;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,7 +59,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
             public void onClick(View v) {
                 final DialogPlus dialogPlus= DialogPlus.newDialog(holder.edit.getContext())
                         .setContentHolder(new ViewHolder(R.layout.dialog_elements))
-                        .setExpanded(true,500)
+                        .setExpanded(true,800)
                         .create();
 
                 /* Runtime Views */
@@ -86,8 +89,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
                     {
                         if(cursors!=null &&  cursors.moveToFirst())
                         {
-                            new SQLite_DB_Manager(context.getApplicationContext()).updateSpecificRow(col_id, cursors.getString(1), cursors.getString(2));
-                            Toast.makeText(context, "updated", Toast.LENGTH_SHORT).show();
+                            int res= new SQLite_DB_Manager(context).updateSpecificRow(String.valueOf(col_id), cursors.getString(1), cursors.getString(2));
+
+                            Toast.makeText(context.getApplicationContext(), "res="+res, Toast.LENGTH_SHORT).show();
+
                         }
 
                     }
@@ -99,9 +104,28 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String res= new SQLite_DB_Manager(context.getApplicationContext()).deleteData(data_holder.get(position).getId());
 
-                Toast.makeText(context.getApplicationContext(), res, Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder=new AlertDialog.Builder(holder.delete.getContext()); //Pass any view to continue
+                builder.setIcon(R.drawable.ic_baseline_delete_24);
+                builder.setTitle("Delete Note");
+                builder.setMessage("Are you sure?");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String res= new SQLite_DB_Manager(context.getApplicationContext()).deleteData(data_holder.get(position).getId());
+                        Toast.makeText(context.getApplicationContext(), res, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(context, "Delete failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.show();
+
             }
         });
     }
