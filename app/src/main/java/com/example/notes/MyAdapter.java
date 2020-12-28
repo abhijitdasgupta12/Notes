@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,17 +28,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements Filterable
 {
     ArrayList<Model> data_holder;
-//    ArrayList<Model> backups;
+    ArrayList<Model> backups;
 
     private Context context;
 
     public MyAdapter(ArrayList<Model> data_holder, Context context)
     {
         this.data_holder = data_holder;
-//        backups=new ArrayList<>(data_holder);
+        backups=new ArrayList<>(data_holder);
         this.context= context;
     }
 
@@ -134,6 +136,54 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
     public int getItemCount() {
         return data_holder.size();
     }
+
+    //Search operation start
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter=new Filter()
+    {
+        @Override
+        protected FilterResults performFiltering(CharSequence keyword)
+        {
+            ArrayList<Model> filtered_data= new ArrayList<>();
+
+            if (keyword.toString().isEmpty()) //If there is nothing typed in the search bar
+            {
+                filtered_data.addAll(backups); //All information inside ArrayList "data" will be added inside of "filtered_data"
+            }
+            else
+            {
+                for (Model object : backups) //The objects inside the array list "backup" will be put inside the object of ModelClass "object"
+                {
+                    //taking the "header" object from arraylist "backup" & comparing elements with contents of header
+                    if(object.getTitle().toLowerCase().contains(keyword.toString().toLowerCase()))
+                    {
+                        filtered_data.add(object);
+                    }
+                }
+            }
+
+            //We will have to return the class object since the type of this function is a Class
+            FilterResults filterResults=new FilterResults();
+            filterResults.values=filtered_data; //storing the value
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results)
+        {
+            data_holder.clear(); //clearing the information before putting filtered results
+
+            data_holder.addAll((ArrayList<Model>)results.values);
+
+            notifyDataSetChanged(); //The control will be passed to publishResults once the filtering is done by performFiltering
+        }
+    };//search operation end
+
 
     static class MyViewHolder extends RecyclerView.ViewHolder
     {
