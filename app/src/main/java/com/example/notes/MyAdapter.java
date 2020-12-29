@@ -59,6 +59,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final DialogPlus dialogPlus= DialogPlus.newDialog(holder.edit.getContext())
                         .setContentHolder(new ViewHolder(R.layout.dialog_elements))
                         .setExpanded(true,800)
@@ -91,9 +92,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                     {
                         if(cursors!=null &&  cursors.moveToFirst())
                         {
-                            int res= new SQLite_DB_Manager(context).updateSpecificRow(String.valueOf(col_id), cursors.getString(1), cursors.getString(2));
+                            String msg;
 
-                            Toast.makeText(context.getApplicationContext(), "res="+res, Toast.LENGTH_SHORT).show();
+                            int res= new SQLite_DB_Manager(context).updateSpecificRow(col_id, update_title.getText().toString(), update_desc.getText().toString());
+
+                            if (res == 1)
+                            {
+                                msg= "Note updated! Refresh page to see the changes.";
+                            }
+                            else
+                            {
+                                msg = "Update failed";
+                            }
+                            Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
 
                         }
 
