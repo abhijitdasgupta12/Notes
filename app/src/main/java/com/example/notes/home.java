@@ -79,12 +79,12 @@ public class home extends AppCompatActivity {
         menuInflater.inflate(R.menu.menus,menu);
         menu.findItem(R.id.home).setVisible(false);
 
-        MenuItem searchs, refresh, addnote, about;
+        MenuItem searchs, refresh, addnote, about1;
 
         searchs= menu.findItem(R.id.search);
         refresh= menu.findItem(R.id.refresh);
         addnote= menu.findItem(R.id.addNote);
-        about= menu.findItem(R.id.about);
+        about1= menu.findItem(R.id.about);
         
         SearchView searchView= (SearchView)searchs.getActionView(); //This will create a textbox when search option is clicked
         //This part of code will perform action when something is typed in the search bar
@@ -122,19 +122,30 @@ public class home extends AppCompatActivity {
             }
         });
 
-        about.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        about1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                 AlertDialog.Builder builder=new AlertDialog.Builder(getApplicationContext()); //Pass any view to continue
-                 builder.setIcon(R.drawable.ic_baseline_info_24);
-                 builder.setTitle("About");
-                 builder.setMessage("'Notes' is an Android Application that enables the user to save notes in device.\nDeveloper: Abhijit Dasgupta");
-                 builder.setNegativeButton("Ok", null);
-                 builder.show();
+                AlertDialog.Builder builder=new AlertDialog.Builder(home.this); //Pass any view to continue
+                builder.setIcon(R.drawable.ic_baseline_info_24);
+                builder.setTitle("About");
+                builder.setMessage("'Notes' is an Android Application that enables the user to save notes in device.\nDeveloper: Abhijit Dasgupta");
+                builder.setNegativeButton("Ok", null);
+                builder.show();
                 return false;
             }
         });
 
         return super.onCreateOptionsMenu(menu);
     }
+
+//    private void showAlert()
+//    {
+//        AlertDialog.Builder builder=new AlertDialog.Builder(this); //Pass any view to continue
+//        builder.setIcon(R.drawable.ic_baseline_info_24);
+//        builder.setTitle("About");
+//        builder.setMessage("'Notes' is an Android Application that enables the user to save notes in device.\nDeveloper: Abhijit Dasgupta");
+//        builder.setNegativeButton("Ok", null);
+//        builder.show();
+//    }
+
 }
