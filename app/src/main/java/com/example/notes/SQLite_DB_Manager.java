@@ -73,17 +73,17 @@ public class SQLite_DB_Manager extends SQLiteOpenHelper
     }
 
     //Updating record into a specific row ****ERROR HAPPENING FOR SOME REASON! DATA IS NOT GETTING INSERTED IN THE DB BUT RESULT SHOWS DATA INSERTED****
-    public int updateSpecificRow(String col_id, String title, String desc)
+    public int updateSpecificRow(int columnNo, String title, String desc)
     {
         SQLiteDatabase db= this.getWritableDatabase();
 
         ContentValues contentValues= new ContentValues();
 
-        contentValues.put("id", col_id);
+//        contentValues.put("id", columnNo);
         contentValues.put("title",title);
         contentValues.put("description",desc);
 
-        return db.update("tbl_notes", contentValues, "id=?", new String[]{col_id});
+        return db.update("tbl_notes", contentValues, "id="+columnNo, null);
 
     }
 
