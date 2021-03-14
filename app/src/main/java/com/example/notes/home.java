@@ -128,7 +128,7 @@ public class home extends AppCompatActivity {
                 AlertDialog.Builder builder=new AlertDialog.Builder(home.this); //Pass any view to continue
                 builder.setIcon(R.drawable.ic_baseline_info_24);
                 builder.setTitle("About");
-                builder.setMessage("'Notes' is an Android Application that enables the user to save notes in device.\nDeveloper: Abhijit Dasgupta");
+                builder.setMessage("'Notes' is an Android Application that enables the user to save notes in device.\nThis application was developed during my learning process & for non-profit and personal use only. Some of the layout design idea was taken from Internet.");
                 builder.setNegativeButton("Ok", null);
                 builder.show();
                 return false;
@@ -143,7 +143,7 @@ public class home extends AppCompatActivity {
 //        AlertDialog.Builder builder=new AlertDialog.Builder(this); //Pass any view to continue
 //        builder.setIcon(R.drawable.ic_baseline_info_24);
 //        builder.setTitle("About");
-//        builder.setMessage("'Notes' is an Android Application that enables the user to save notes in device.\nDeveloper: Abhijit Dasgupta");
+//        builder.setMessage("'Notes' is an Android Application that enables the user to save notes in device.\nThis application was developed during my learning process & for non-profit and personal use only. Some of the layout design idea was taken from Internet.");
 //        builder.setNegativeButton("Ok", null);
 //        builder.show();
 //    }
