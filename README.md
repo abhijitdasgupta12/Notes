@@ -1,4 +1,4 @@
-# Notes
+# About "Notes" app
 "Notes" is a simple offline Android Application that allows the user to create, edit & delete notes in their android device.
 
 # Note
