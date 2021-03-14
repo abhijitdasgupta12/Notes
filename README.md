@@ -1,2 +1,5 @@
 # Notes
-"Notes" is a simple Android Application that allows the user to create, update &amp; delete notes or ToDo stuffs in their android device. This project is a test project &amp; I will update this app with new features in future. This app uses SQLite to store info.
+"Notes" is a simple offline Android Application that allows the user to create, edit & delete notes in their android device.
+
+# Note
+This application was developed during my learning process & for non-profit and personal use only. Some of the layout design idea was taken from Internet.
